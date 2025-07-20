@@ -2578,9 +2578,11 @@ public class Jass2 {
 					});
 			jassProgramVisitor.getJassNativeManager().createNative("RemoveItem",
 					(arguments, globalScope, triggerScope) -> {
-						final CItem whichItem = arguments.get(0).visit(ObjectJassValueVisitor.getInstance());
-						CommonEnvironment.this.simulation.removeItem(whichItem);
-						meleeUI.removedItem(whichItem);
+						final CItem whichItem = nullable(arguments, 0, ObjectJassValueVisitor.getInstance());
+						if (whichItem != null) {
+							CommonEnvironment.this.simulation.removeItem(whichItem);
+							meleeUI.removedItem(whichItem);
+						}
 						return null;
 					});
 			jassProgramVisitor.getJassNativeManager().createNative("GetItemPlayer",
